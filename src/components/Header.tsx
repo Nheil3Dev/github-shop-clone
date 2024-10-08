@@ -2,9 +2,11 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <header className="bg-black py-4 px-20">
+    <header className="dark:bg-gray-900 py-6 container md:mx-auto">
       <Link href="/">
-        <p className="text-white font-extrabold">The NheiL3 Shop</p>
+        <p className="text-black dark:text-white font-extrabold ml-4">
+          The NheiL3 Shop
+        </p>
       </Link>
     </header>
   );
