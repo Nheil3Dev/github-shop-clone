@@ -21,7 +21,7 @@ export const getCategories = async (locale: string = "en") => {
 
     return categories;
   } catch (error) {
-    console.log("Error fetching categories:", error);
+    console.error("Error fetching categories:", error);
     throw new Error("Failed to fetch categories.");
   }
 };

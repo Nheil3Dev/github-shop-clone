@@ -1,10 +1,10 @@
+import { Link } from "@/i18n/routing";
 import { getCategories } from "@/lib/get-product-categories";
 import { CategoryType } from "@/types/types";
 import Image from "next/image";
-import Link from "next/link";
 
-export const Categories = async () => {
-  const categories = await getCategories();
+export const Categories = async ({ locale }: { locale: string }) => {
+  const categories = await getCategories(locale);
 
   if (categories.length === 0) return null;
 
@@ -32,4 +32,3 @@ export const Categories = async () => {
     </div>
   );
 };
-// className="grid place-content-center overflow-hidden rounded-lg border border-gray-200 bg-white p-6 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"

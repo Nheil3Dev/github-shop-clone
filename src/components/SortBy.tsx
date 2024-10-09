@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const SortBy = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations("SortComponent");
 
   const currentFilter = searchParams.get("sortBy") ?? "all";
 
@@ -24,7 +26,7 @@ export const SortBy = () => {
             : "border-gray-500 hover:bg-white hover:text-gray-800"
         }`}
       >
-        Default
+        {t("default")}
       </button>
       <button
         type="button"
@@ -35,7 +37,7 @@ export const SortBy = () => {
             : "border-gray-500 hover:bg-white hover:text-gray-800"
         }`}
       >
-        By price
+        {t("price")}
       </button>
     </div>
   );

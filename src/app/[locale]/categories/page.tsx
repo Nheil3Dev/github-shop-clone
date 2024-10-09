@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   title: "Categories",
 };
 
-export default function Page() {
+export default function CategoryPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
   const breadcrumbs = [
     {
       label: "Home",
@@ -25,7 +29,7 @@ export default function Page() {
       <div className="container mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
-      <Categories />
+      <Categories locale={locale} />
     </section>
   );
 }

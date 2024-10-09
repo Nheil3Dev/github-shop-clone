@@ -1,0 +1,16 @@
+{
+  "HomePage": {
+    "button": "Show Categories"
+  },
+  "PaginationDataComponent": {
+    "field0": "Products",
+    "field1": "of"
+  },
+  "SortComponent": {
+    "default": "Default",
+    "price": "By price"
+  },
+  "CartBtnComponent": {
+    "label": "Add to cart"
+  }
+}

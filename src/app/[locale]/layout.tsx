@@ -1,7 +1,9 @@
 import { Header } from "@/components/Header";
 import type { Metadata } from "next";
-import { montserrat } from "./fonts/fonts";
-import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { montserrat } from "../fonts/fonts";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -11,18 +13,23 @@ export const metadata: Metadata = {
   description: "A Github's shop clon for learning with love :)",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  const messages = await getMessages();
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${montserrat.className} antialiased bg-white dark:bg-gray-900  min-h-screen`}
       >
-        <Header />
-        <main>{children}</main>
+        <NextIntlClientProvider messages={messages}>
+          <Header />
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

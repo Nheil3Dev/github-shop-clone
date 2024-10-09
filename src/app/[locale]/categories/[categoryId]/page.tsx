@@ -6,29 +6,45 @@ import { SortBy } from "@/components/SortBy";
 import { getProducts } from "@/lib/get-products";
 import { capitalize } from "@/lib/utils";
 import { Product } from "@/types/types";
+import pick from "lodash/pick";
 import { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Products",
+type Props = {
+  params: { categoryId: "shirts" | "stickers"; locale: string };
+  searchParams?: { page: string; sortBy: string };
 };
 
 const PAGE_SIZE = 3;
 
-export default async function Page({
+export async function generateMetadata({
   params,
   searchParams,
-}: {
-  params: { categoryId: "shirts" | "stickers" };
-  searchParams?: { page: string; sortBy: string };
-}) {
-  const { categoryId } = params;
+}: Props): Promise<Metadata> {
+  const categoryId = params.categoryId;
+  const page = searchParams?.page ?? 1;
+
+  const title = `${Number(page) > 1 ? `Page ${page} | ` : ""}${capitalize(
+    categoryId
+  )}`;
+
+  return {
+    title,
+  };
+}
+
+export default async function ProductsPage({ params, searchParams }: Props) {
+  const { categoryId, locale } = params;
   const page = Number(searchParams?.page ?? 1);
+  const messages = await getMessages();
 
   const { products, pagination } = await getProducts({
     categoryId,
     page,
     pageSize: PAGE_SIZE,
     sort: searchParams?.sortBy,
+    locale,
   });
 
   const category = capitalize(categoryId);
@@ -60,12 +76,18 @@ export default async function Page({
 
         {products.length > 0 && (
           <div className="container mx-auto flex flex-col-reverse justify-center items-center gap-2 sm:flex-row sm:justify-between sm:items-center">
-            <PaginationData
-              page={page}
-              pageSize={pagination.pageSize}
-              total={pagination.total}
-            />
-            <SortBy />
+            <NextIntlClientProvider
+              messages={pick(messages, "PaginationDataComponent")}
+            >
+              <PaginationData
+                page={page}
+                pageSize={pagination.pageSize}
+                total={pagination.total}
+              />
+            </NextIntlClientProvider>
+            <NextIntlClientProvider messages={pick(messages, "SortComponent")}>
+              <SortBy />
+            </NextIntlClientProvider>
           </div>
         )}
 

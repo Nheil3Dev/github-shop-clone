@@ -8,13 +8,15 @@ export const getProducts = async ({
   pageSize,
   page,
   sort,
+  locale = "en",
 }: {
   categoryId: "shirts" | "stickers";
   pageSize: number;
   page: number;
   sort?: string;
+  locale?: string;
 }): Promise<{ products: Product[]; pagination: Pagination }> => {
-  let url = `products?filters[product_category][slug][$contains]=${categoryId}&populate=images`;
+  let url = `products?locale=${locale}&filters[product_category][slug][$contains]=${categoryId}&populate=images`;
 
   if (page) url += `&pagination[page]=${page}`;
   if (pageSize) url += `&pagination[pageSize]=${pageSize}`;

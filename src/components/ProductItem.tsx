@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/routing";
 import { Product } from "@/types/types";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,17 +17,16 @@ export const ProductItem = ({
   return (
     <div
       key={product.slug}
-      className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      className="w-full max-w-sm border dark:border-gray-900 hover:border-black dark:hover:border-gray-400"
     >
-      <a href={`${url}/${product.slug}`}>
+      <Link href={`${url}/${product.slug}`}>
         <div
-          className="m-8 overflow-hidden"
+          className="m-4 overflow-hidden"
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
           {ishover && product.images.length > 1 ? (
             <Image
-              className="rounded-t-lg"
               src={product.images[1]}
               alt="product image"
               width={382}
@@ -34,7 +34,6 @@ export const ProductItem = ({
             />
           ) : (
             <Image
-              className="rounded-t-lg"
               src={product.images[0]}
               alt="product image"
               width={382}
@@ -42,13 +41,13 @@ export const ProductItem = ({
             />
           )}
         </div>
-      </a>
+      </Link>
       <div className="px-5 pb-5">
-        <a href="#">
+        <Link href={`${url}/${product.slug}`}>
           <h5 className="min-h-16 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {product.name}
           </h5>
-        </a>
+        </Link>
 
         <div className="flex flex-row items-center justify-between mt-6 flex-wrap">
           <p className="text-4xl font-semibold">${product.price}</p>
