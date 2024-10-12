@@ -1,25 +1,14 @@
-import { Image } from "@/types/types";
+import { Image, Product, ProductVariant } from "@/types/types";
 import { query } from "./strapi";
+import { sortSizes } from "./utils";
 
 const { STRAPI_HOST } = process.env;
 
 export const getProduct = async (
   productId: string,
   locale: string = "en"
-): Promise<{
-  name: string;
-  slug: string;
-  description: any;
-  images: string[];
-  price: string | number;
-  stock: string | number;
-  color: string;
-  productCategory: {
-    name: string;
-    slug: string;
-  };
-}> => {
-  const url = `products?locale=${locale}&filters[slug][$contains]=${productId}&populate[0]=images&populate[1]=product_category`;
+): Promise<Product> => {
+  const url = `products?locale=${locale}&filters[slug][$contains]=${productId}&populate[0]=images&populate[1]=product_category&populate[2]=product_variants`;
 
   try {
     const res = await query(url);
@@ -29,27 +18,34 @@ export const getProduct = async (
       name,
       description,
       price,
-      stock,
-      color,
       images: rawImages,
       product_category,
+      product_variants,
     } = data[0];
+
     const images = rawImages.map(
       (image: Image) => `${STRAPI_HOST}/${image.url}`
     );
+
     const productCategory = {
       name: product_category.name,
       slug: product_category.slug,
     };
+
+    const variants = product_variants.map((variant: ProductVariant) => {
+      return { color: variant.color, size: variant.size, stock: variant.stock };
+    });
+
+    const sortedVariants = sortSizes(variants);
+
     return {
       name,
       slug,
       description,
       images,
       price,
-      stock,
-      color,
       productCategory,
+      variants: sortedVariants,
     };
   } catch (error) {
     console.error("Error fetching a product:", error);

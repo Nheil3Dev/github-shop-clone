@@ -5,7 +5,7 @@ export type CategoryType = {
   image: string;
 };
 
-export interface Product {
+export interface CategoryProduct {
   name: string;
   slug: string;
   description: Description[];
@@ -129,3 +129,22 @@ export interface CategoryImage {
   documentId: string;
   url: string;
 }
+
+export type ProductVariant = {
+  size: string;
+  color: string;
+  stock: string | number;
+};
+
+export type Product = {
+  name: string;
+  slug: string;
+  description: Description;
+  images: string[];
+  price: string | number;
+  productCategory: {
+    name: string;
+    slug: string;
+  };
+  variants: ProductVariant[];
+};

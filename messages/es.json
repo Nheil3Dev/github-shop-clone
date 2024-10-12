@@ -1,7 +1,4 @@
 {
-  "HomePage": {
-    "button": "Mostrar Categorías"
-  },
   "PaginationDataComponent": {
     "field0": "Productos",
     "field1": "de"
@@ -12,5 +9,15 @@
   },
   "CartBtnComponent": {
     "label": "Añadir al carrito"
+  },
+  "ProductPage": {
+    "stocked": "En stock",
+    "noStocked": "Fuera de stock",
+    "size": "Talla",
+    "currency": "EUR",
+    "remaining": "Sólo quedan {count}"
+  },
+  "CategoryPage": {
+    "noItems": "No se encontraron productos"
   }
 }

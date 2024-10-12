@@ -4,8 +4,8 @@ import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { getHomeInfo } from "../lib/get-home-info";
 
-export const Hero = async ({ btnText }: { btnText: string }) => {
-  const { title, description, image } = await getHomeInfo();
+export const Hero = async ({ locale }: { locale: string }) => {
+  const { title, description, image, button } = await getHomeInfo(locale);
 
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -29,7 +29,7 @@ export const Hero = async ({ btnText }: { btnText: string }) => {
             className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium 
             text-center text-white rounded-lg border border-black bg-black dark:bg-white dark:text-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-transparent dark:hover:text-white focus:ring-4 focus:ring-black dark:focus:ring-white"
           >
-            {btnText}
+            {button}
             <svg
               className="w-6 h-6 ml-2 -mr-1"
               fill="currentColor"

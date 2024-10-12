@@ -7,8 +7,8 @@ import "../globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | The NheiL Shop",
-    default: "Home | The NheiL Shop",
+    template: "%s | The NheiL's Shop",
+    default: "Home | The NheiL's Shop",
   },
   description: "A Github's shop clon for learning with love :)",
 };

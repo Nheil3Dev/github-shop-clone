@@ -1,9 +1,8 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { CartButton } from "@/components/CartButton";
 import { ImgSlider } from "@/components/ImgSlider";
+import { ProductInfo } from "@/components/ProductInfo";
 import { getProduct } from "@/lib/get-product";
 import { capitalize } from "@/lib/utils";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 
 type Props = {
@@ -25,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { productId, locale } = params;
-  const { name, description, images, price, stock, productCategory } =
+  const { name, description, images, price, productCategory, variants } =
     await getProduct(productId, locale);
   const breadcrumbs = [
     {
@@ -55,30 +54,12 @@ export default async function ProductPage({ params }: Props) {
       <div className="container px-4 sm:px-0 mx-auto">
         <div className="flex flex-col md:flex-row">
           <ImgSlider images={images} />
-          <div className="md:w-2/5 mt-4 md:mt-16">
-            <h2 className="text-xl md:text-5xl font-semibold mb-3">{name}</h2>
-            <div className="flex flex-row justify-between items-end mb-8 pb-4 border-b dark:border-white">
-              <h3 className="text-2xl md:text-4xl ">
-                ${Number(price).toFixed(2)}
-              </h3>
-              <p>{stock ? "In stock" : "Out of stock"}</p>
-            </div>
-            <div className="mb-8">
-              <form action="#">
-                <input
-                  type="number"
-                  className="text-black dark:text-white w-24 px-5 py-3 rounded-lg bg-transparent border"
-                  min={1}
-                  step={1}
-                  defaultValue={1}
-                />
-                <CartButton />
-              </form>
-            </div>
-            <div>
-              <BlocksRenderer content={description} />
-            </div>
-          </div>
+          <ProductInfo
+            name={name}
+            description={description}
+            price={price}
+            variants={variants}
+          />
         </div>
       </div>
     </section>

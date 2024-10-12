@@ -34,3 +34,11 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
 export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const sortSizes = (variants) => {
+  const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"];
+
+  return variants.sort((a, b) => {
+    return sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size);
+  });
+};

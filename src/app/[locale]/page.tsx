@@ -1,12 +1,10 @@
 import { Hero } from "@/components/Hero";
-import { useTranslations } from "next-intl";
 
-export default function HomePage() {
-  const t = useTranslations("HomePage");
-  const btnText = t("button");
+export default function HomePage({ params }: { params: { locale: string } }) {
+  const { locale } = params;
   return (
     <>
-      <Hero btnText={btnText} />
+      <Hero locale={locale} />
     </>
   );
 }
