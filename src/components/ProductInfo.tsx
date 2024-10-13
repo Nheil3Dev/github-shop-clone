@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/context/CartContext";
 import { Description, ProductVariant } from "@/types/types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useFormatter, useTranslations } from "next-intl";
@@ -11,16 +12,40 @@ type Props = {
   name: string;
   description: Description;
   price: string | number;
+  image: string;
   variants: ProductVariant[];
 };
 
-export const ProductInfo = ({ name, description, price, variants }: Props) => {
+export const ProductInfo = ({
+  name,
+  description,
+  price,
+  image,
+  variants,
+}: Props) => {
   const [selectedSize, setSelectedSize] = useState<
     ProductVariant | undefined
   >();
+  const [qty, setQty] = useState(1);
   const isStocked = variants.some((variant) => Number(variant.stock) > 0);
   const t = useTranslations("ProductPage");
   const format = useFormatter();
+  const { addCartItem } = useCart();
+  const handleSubmit = (ev: SubmitEvent) => {
+    ev.preventDefault();
+    const productToCart = {
+      id: crypto.randomUUID(),
+      name,
+      image,
+      href: "#",
+      size: selectedSize?.size ?? "-",
+      price,
+      qty,
+    };
+
+    console.log(productToCart);
+    addCartItem(productToCart);
+  };
 
   return (
     <div className="md:w-2/5 mt-4 md:mt-16">
@@ -49,7 +74,7 @@ export const ProductInfo = ({ name, description, price, variants }: Props) => {
       </div>
 
       <div className="mb-8">
-        <form action="#">
+        <form onSubmit={handleSubmit}>
           <Sizes
             title={t("size")}
             variants={variants}
@@ -61,7 +86,8 @@ export const ProductInfo = ({ name, description, price, variants }: Props) => {
             className="text-black dark:text-white w-24 px-5 py-3 rounded-lg bg-transparent border dark:disabled:border-gray-600 dark:disabled:text-gray-600 disabled:border-gray-300 disabled:text-gray-300"
             min={1}
             step={1}
-            defaultValue={1}
+            value={qty}
+            onChange={(ev) => setQty(Number(ev.target.value))}
             disabled={!isStocked}
           />
           <CartButton isStocked={isStocked} />

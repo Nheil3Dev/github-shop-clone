@@ -58,6 +58,7 @@ export default async function ProductPage({ params }: Props) {
             name={name}
             description={description}
             price={price}
+            image={images[0]}
             variants={variants}
           />
         </div>
