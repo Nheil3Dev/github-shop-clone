@@ -24,10 +24,15 @@ export default function Breadcrumbs({
             className={`${
               breadcrumb.active
                 ? "text-gray-900 dark:text-white"
-                : "text-gray-500"
+                : "text-gray-500 hover:underline"
             }`}
           >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            <Link
+              className={breadcrumb.active ? "cursor-default" : ""}
+              href={breadcrumb.href}
+            >
+              {breadcrumb.label}
+            </Link>
             {index < breadcrumbs.length - 1 ? (
               <span className="mx-3 inline-block">/</span>
             ) : null}

@@ -1,16 +1,21 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Categories } from "@/components/Categories";
+import { ProductsGrid } from "@/components/ProductsGrid";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Categories",
+  title: "Shop all",
 };
 
-export default function CategoryPage({
-  params: { locale },
-}: {
+type Props = {
   params: { locale: string };
-}) {
+  searchParams?: { page: string; sortBy: string };
+};
+
+export default function CategoryPage({ params, searchParams }: Props) {
+  const { locale } = params;
+  const page = Number(searchParams?.page ?? 1);
+
   const breadcrumbs = [
     {
       label: "Home",
@@ -18,8 +23,8 @@ export default function CategoryPage({
       active: false,
     },
     {
-      label: "Categories",
-      href: "/categories",
+      label: "Shop all",
+      href: "#",
       active: true,
     },
   ];
@@ -29,7 +34,10 @@ export default function CategoryPage({
       <div className="container mx-auto">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
+
       <Categories locale={locale} />
+
+      <ProductsGrid page={page} locale={locale} searchParams={searchParams} />
     </section>
   );
 }

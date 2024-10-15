@@ -9,7 +9,7 @@ export const Categories = async ({ locale }: { locale: string }) => {
   if (categories.length === 0) return null;
 
   return (
-    <div className="px-4 mb-4 mt-6 gap-5 sm:mt-2 grid grid-cols-1 md:px-0 md:grid-cols-3">
+    <div className="px-4 mb-20 mt-6 gap-5 sm:mt-2 grid grid-cols-1 md:px-0 md:grid-cols-3">
       {categories.map((category: CategoryType, index: number) => (
         <div key={index} className="flex flex-col">
           <Link href={`/categories/${category.slug}`}>
