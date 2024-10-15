@@ -1,6 +1,5 @@
-import { Image, Product, ProductVariant } from "@/types/types";
+import { Image, Product } from "@/types/types";
 import { query } from "./strapi";
-import { sortSizes } from "./utils";
 
 const { STRAPI_HOST } = process.env;
 
@@ -20,7 +19,6 @@ export const getProduct = async (
       price,
       images: rawImages,
       product_category,
-      product_variants,
     } = data[0];
 
     const images = rawImages.map(
@@ -32,20 +30,13 @@ export const getProduct = async (
       slug: product_category.slug,
     };
 
-    const variants = product_variants.map((variant: ProductVariant) => {
-      return { color: variant.color, size: variant.size, stock: variant.stock };
-    });
-
-    const sortedVariants = sortSizes(variants);
-
     return {
       name,
       slug,
       description,
       images,
-      price,
+      price: Number(price),
       productCategory,
-      variants: sortedVariants,
     };
   } catch (error) {
     console.error("Error fetching a product:", error);

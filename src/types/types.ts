@@ -11,6 +11,7 @@ export interface CategoryProduct {
   description: Description[];
   images: string[];
   price: number;
+  categorySlug?: string;
 }
 
 export interface ProductApi {
@@ -33,6 +34,7 @@ export interface ProductData {
   publishedAt: Date;
   locale: string;
   images: Image[];
+  product_category?: CategoryType;
 }
 
 export interface Description {
@@ -131,9 +133,11 @@ export interface CategoryImage {
 }
 
 export type ProductVariant = {
+  id: string;
   size: string;
   color: string;
-  stock: string | number;
+  stock: number;
+  colorCode: string;
 };
 
 export type Product = {
@@ -141,10 +145,33 @@ export type Product = {
   slug: string;
   description: Description;
   images: string[];
-  price: string | number;
+  price: number;
   productCategory: {
     name: string;
     slug: string;
   };
-  variants: ProductVariant[];
+};
+
+export type ProductColors = {
+  name: string;
+  colorCode: string;
+};
+
+export type CartItem = {
+  id: string;
+  name: string;
+  image: string;
+  href: string;
+  size: string;
+  color: string;
+  price: number;
+  qty: number;
+};
+
+export type SelectedProduct = {
+  id: string | undefined;
+  size: string | undefined;
+  color: string | undefined;
+  stock: undefined | number;
+  qty: number;
 };

@@ -1,17 +1,15 @@
 "use client";
 
-import { useCart } from "@/context/CartContext";
+import { useProduct } from "@/hooks/useProduct";
 import { Description, ProductVariant } from "@/types/types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useFormatter, useTranslations } from "next-intl";
-import { useState } from "react";
-import { CartButton } from "./CartButton";
-import { Sizes } from "./Sizes";
+import { ProductForm } from "./ProductForm";
 
 type Props = {
   name: string;
   description: Description;
-  price: string | number;
+  price: number;
   image: string;
   variants: ProductVariant[];
 };
@@ -23,29 +21,20 @@ export const ProductInfo = ({
   image,
   variants,
 }: Props) => {
-  const [selectedSize, setSelectedSize] = useState<
-    ProductVariant | undefined
-  >();
-  const [qty, setQty] = useState(1);
-  const isStocked = variants.some((variant) => Number(variant.stock) > 0);
+  const {
+    selectedProduct,
+    handleQty,
+    handleSelectedColor,
+    handleSelectedSize,
+    isStocked,
+    colors,
+    sizes,
+    error,
+    setError,
+  } = useProduct(variants);
+
   const t = useTranslations("ProductPage");
   const format = useFormatter();
-  const { addCartItem } = useCart();
-  const handleSubmit = (ev: SubmitEvent) => {
-    ev.preventDefault();
-    const productToCart = {
-      id: crypto.randomUUID(),
-      name,
-      image,
-      href: "#",
-      size: selectedSize?.size ?? "-",
-      price,
-      qty,
-    };
-
-    console.log(productToCart);
-    addCartItem(productToCart);
-  };
 
   return (
     <div className="md:w-2/5 mt-4 md:mt-16">
@@ -57,42 +46,34 @@ export const ProductInfo = ({
             currency: t("currency"),
           })}
         </h3>
+
+        {/* Stock */}
         <div className="flex flex-col items-end">
           <p className="text-xl">{isStocked ? t("stocked") : t("noStocked")}</p>
-          {selectedSize && (
+          {selectedProduct?.stock && (
             <p className="text-sm font-light">
-              {t("remaining", { count: selectedSize.stock })}
-            </p>
-          )}
-          {/* For products with no sizes like stickers */}
-          {variants.length === 1 && (
-            <p className="text-sm font-light">
-              {t("remaining", { count: variants[0].stock })}
+              {t("remaining", { count: selectedProduct?.stock })}
             </p>
           )}
         </div>
       </div>
 
-      <div className="mb-8">
-        <form onSubmit={handleSubmit}>
-          <Sizes
-            title={t("size")}
-            variants={variants}
-            selectedSize={selectedSize}
-            setSelectedSize={setSelectedSize}
-          />
-          <input
-            type="number"
-            className="text-black dark:text-white w-24 px-5 py-3 rounded-lg bg-transparent border dark:disabled:border-gray-600 dark:disabled:text-gray-600 disabled:border-gray-300 disabled:text-gray-300"
-            min={1}
-            step={1}
-            value={qty}
-            onChange={(ev) => setQty(Number(ev.target.value))}
-            disabled={!isStocked}
-          />
-          <CartButton isStocked={isStocked} />
-        </form>
-      </div>
+      <ProductForm
+        variants={variants}
+        image={image}
+        price={price}
+        name={name}
+        sizeTitle={t("size")}
+        handleQty={handleQty}
+        handleSelectedColor={handleSelectedColor}
+        handleSelectedSize={handleSelectedSize}
+        selectedProduct={selectedProduct}
+        sizes={sizes}
+        colors={colors}
+        error={error}
+        setError={setError}
+      />
+
       <div>
         <BlocksRenderer content={description} />
       </div>

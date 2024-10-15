@@ -2,6 +2,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { ImgSlider } from "@/components/ImgSlider";
 import { ProductInfo } from "@/components/ProductInfo";
 import { getProduct } from "@/lib/get-product";
+import { getVariants } from "@/lib/get-variants";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
 
@@ -24,8 +25,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { productId, locale } = params;
-  const { name, description, images, price, productCategory, variants } =
+  /* Info from product */
+  const { name, description, images, price, productCategory } =
     await getProduct(productId, locale);
+
+  /* Variants from product like size, colors  */
+  const variants = await getVariants(locale, productId);
+
+  console.log(variants);
   const breadcrumbs = [
     {
       label: "Home",
@@ -49,7 +56,7 @@ export default async function ProductPage({ params }: Props) {
     },
   ];
   return (
-    <section className="bg-white pt-8 md:pt-0 pb-16 antialiased dark:bg-gray-900 container mx-auto">
+    <section className="mb-40 bg-white pt-8 md:pt-0 pb-16 antialiased dark:bg-gray-900 container mx-auto">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="container px-4 sm:px-0 mx-auto">
         <div className="flex flex-col md:flex-row">

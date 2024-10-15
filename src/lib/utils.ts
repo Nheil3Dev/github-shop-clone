@@ -1,3 +1,5 @@
+import { ProductVariant } from "@/types/types";
+
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.
@@ -35,10 +37,40 @@ export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const sortSizes = (variants) => {
+export const sortSizes = (variants: ProductVariant[]) => {
   const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"];
 
   return variants.sort((a, b) => {
     return sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size);
   });
+};
+
+export const getColors = (variants: ProductVariant[]) => {
+  // Usamos un Map para asegurar colores únicos y sus códigos
+  const colorMap = new Map<string, string>();
+
+  variants.forEach((variant) => {
+    // Si el color no ha sido añadido aún, lo añadimos con su colorCode
+    if (!colorMap.has(variant.color)) {
+      colorMap.set(variant.color, variant.colorCode);
+    }
+  });
+
+  // Convertimos el map a un array de objetos
+  return Array.from(colorMap, ([name, colorCode]) => ({
+    name,
+    colorCode,
+  }));
+};
+
+export const getSizes = (variants: ProductVariant[]) => {
+  const uniqueSizes = new Set<string>();
+
+  variants.forEach((variant) => {
+    if (Number(variant.stock) > 0) {
+      uniqueSizes.add(variant.size);
+    }
+  });
+
+  return [...uniqueSizes]; // Convertimos el Set a un array
 };
