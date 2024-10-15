@@ -52,12 +52,7 @@ export const ProductItem = ({
           </h5>
         </Link>
 
-        <div className="flex flex-row items-center justify-between mt-6 flex-wrap">
-          <p className="text-4xl font-semibold">${product.price}</p>
-          <button className="bg-black text-white dark:bg-blue-600 px-5 py-2 rounded-lg">
-            Add to cart
-          </button>
-        </div>
+        <p className="text-4xl font-semibold">${product.price}</p>
       </div>
     </div>
   );
