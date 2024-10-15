@@ -1,4 +1,5 @@
 import { CartAside } from "@/components/CartAside";
+import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { CartProvider } from "@/context/CartContext";
 import type { Metadata } from "next";
@@ -26,13 +27,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${montserrat.className} antialiased bg-white dark:bg-gray-900  min-h-screen`}
+        className={`${montserrat.className} antialiased bg-white dark:bg-gray-900  min-h-screen flex flex-col`}
       >
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
             <Header />
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
             <CartAside />
+            <Footer />
           </CartProvider>
         </NextIntlClientProvider>
       </body>

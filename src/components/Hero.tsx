@@ -1,8 +1,8 @@
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { getHomeInfo } from "../lib/get-home-info";
+import { LinkButton } from "./LinkButton";
 
 export const Hero = async ({ locale }: { locale: string }) => {
   const { title, description, image, button } = await getHomeInfo(locale);
@@ -24,11 +24,7 @@ export const Hero = async ({ locale }: { locale: string }) => {
           >
             <BlocksRenderer content={description} />
           </div>
-          <Link
-            href="/categories"
-            className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium 
-            text-center text-white rounded-lg border border-black bg-black dark:bg-white dark:text-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-transparent dark:hover:text-white focus:ring-4 focus:ring-black dark:focus:ring-white"
-          >
+          <LinkButton href={"/categories"}>
             {button}
             <svg
               className="w-6 h-6 ml-2 -mr-1"
@@ -38,7 +34,7 @@ export const Hero = async ({ locale }: { locale: string }) => {
             >
               <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
             </svg>
-          </Link>
+          </LinkButton>
         </div>
 
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
