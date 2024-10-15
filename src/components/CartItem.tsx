@@ -12,6 +12,7 @@ export const CartItem = ({
     name: string;
     href: string;
     size: string;
+    color: string;
     qty: number;
     price: number;
   };
@@ -41,7 +42,15 @@ export const CartItem = ({
         </div>
         <p className="text-sm">
           Size:{" "}
-          <span className="dark:text-gray-300 font-normal">{product.size}</span>
+          <span className="dark:text-gray-300 font-normal">
+            {product.size?.toUpperCase() === "NONE" ? "-" : product.size}
+          </span>
+        </p>
+        <p className="text-sm">
+          Color:{" "}
+          <span className="dark:text-gray-300 font-normal">
+            {product.color?.toUpperCase() === "NONE" ? "-" : product.color}
+          </span>
         </p>
         <div className="flex items-center justify-between text-sm">
           <p>

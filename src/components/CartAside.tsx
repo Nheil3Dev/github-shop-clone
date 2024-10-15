@@ -9,7 +9,7 @@ export const CartAside = () => {
 
   return (
     <aside
-      className={`w-80 flex flex-col h-screen fixed top-0 right-0 border-l border-gray-800 dark:border-l-white ${
+      className={`z-30 w-80 flex flex-col h-screen fixed top-0 right-0 border-l border-gray-800 dark:border-l-white ${
         isCartOpen ? "translate-x-0" : "translate-x-full"
       } transition-transform`}
     >
@@ -42,7 +42,7 @@ export const CartAside = () => {
               <Link
                 onClick={toggleCart}
                 href={"/checkout/cart"}
-                className="text-xs m-3 text-center hover:underline hover:text-blue-500 cursor-pointer"
+                className="text-xs m-3 text-center hover:underline hover:text-blue-400 cursor-pointer"
               >
                 View and edit cart
               </Link>
