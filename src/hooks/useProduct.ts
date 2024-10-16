@@ -14,8 +14,6 @@ export const useProduct = (variants: ProductVariant[]) => {
   const colors = getColors(variants);
   const sizes = getSizes(variants);
 
-  console.log(selectedProduct);
-
   const isStocked = variants.some((variant) => Number(variant.stock) > 0);
 
   const handleSelectedColor = (color: string) => {

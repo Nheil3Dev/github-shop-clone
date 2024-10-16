@@ -6,7 +6,7 @@ export async function getHomeInfo(locale: string = "en") {
   try {
     const res = await query(`home?locale=${locale}&populate=cover`);
     const { title, description, cover, button } = res.data;
-    const image = `${STRAPI_HOST}/${cover.url}`;
+    const image = `${STRAPI_HOST}${cover.url}`;
 
     return { title, description, image, button };
   } catch (error) {

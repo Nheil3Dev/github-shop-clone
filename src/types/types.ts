@@ -157,11 +157,12 @@ export type ProductColors = {
   colorCode: string;
 };
 
-export type CartItem = {
-  id: string;
+export type CartProduct = {
+  variantId: string;
+  documentId?: string;
   name: string;
   image: string;
-  href: string;
+  slug: string;
   size: string;
   color: string;
   price: number;

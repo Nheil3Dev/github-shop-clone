@@ -2,7 +2,7 @@
 
 import { useCart } from "@/context/CartContext";
 import { Link } from "@/i18n/routing";
-import { CartItem } from "@/types/types";
+import { CartProduct } from "@/types/types";
 import Image from "next/image";
 
 export const CheckoutTable = () => {
@@ -35,8 +35,8 @@ export const CheckoutTable = () => {
           </tr>
         </thead>
         <tbody>
-          {cart.map((product: CartItem) => (
-            <tr key={product.id} className="border-b border-b-gray-400">
+          {cart.map((product: CartProduct) => (
+            <tr key={product.documentId} className="border-b border-b-gray-400">
               <td className="py-4 w-3/12">
                 <div className="w-1/2">
                   <Image
@@ -50,7 +50,7 @@ export const CheckoutTable = () => {
               <td className="py-4 w-3/12 align-top">
                 <div className="font-semibold">
                   <Link
-                    href={product.href}
+                    href={product.slug}
                     className="underline font-semibold text-black dark:text-gray-200 hover:no-underline"
                   >
                     {product.name}

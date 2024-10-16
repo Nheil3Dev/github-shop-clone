@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductColors } from "@/types/types";
+import { ProductColors, SelectedProduct } from "@/types/types";
 
 export const ColorSelector = ({
   colors,
@@ -9,12 +9,7 @@ export const ColorSelector = ({
 }: {
   colors: ProductColors[];
   handleSelectedColor: (prop: string) => void;
-  selectedProduct: {
-    size: string;
-    color: string;
-    stock: number | undefined;
-    qty: number;
-  };
+  selectedProduct: SelectedProduct;
 }) => {
   if (
     colors[0]?.name === "-" ||

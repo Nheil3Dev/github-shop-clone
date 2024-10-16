@@ -32,7 +32,6 @@ export default async function ProductPage({ params }: Props) {
   /* Variants from product like size, colors  */
   const variants = await getVariants(locale, productId);
 
-  console.log(variants);
   const breadcrumbs = [
     {
       label: "Home",

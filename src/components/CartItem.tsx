@@ -1,22 +1,10 @@
 import { useCart } from "@/context/CartContext";
 import { Link } from "@/i18n/routing";
+import { CartProduct } from "@/types/types";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
-export const CartItem = ({
-  product,
-}: {
-  product: {
-    id: string;
-    image: string;
-    name: string;
-    href: string;
-    size: string;
-    color: string;
-    qty: number;
-    price: number;
-  };
-}) => {
+export const CartItem = ({ product }: { product: CartProduct }) => {
   const { deleteCartItem } = useCart();
   return (
     <div className="flex flex-row align-baseline gap-2 m-4 border-b border-b-gray-400 pb-4 text-gray-500">
@@ -31,12 +19,16 @@ export const CartItem = ({
       <div className="w-9/12 font-semibold">
         <div className="flex items-start justify-between gap-3">
           <Link
-            href={product.href}
+            href={product.slug}
             className="underline font-semibold text-black dark:text-gray-200 hover:no-underline"
           >
             {product.name}
           </Link>
-          <button onClick={() => deleteCartItem(product.id)}>
+          <button
+            onClick={async () => {
+              await deleteCartItem(product.documentId as string);
+            }}
+          >
             <TrashIcon height={20} className="hover:text-blue-400" />
           </button>
         </div>

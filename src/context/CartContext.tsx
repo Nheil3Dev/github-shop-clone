@@ -1,12 +1,22 @@
 "use client";
 
-import { CartItem } from "@/types/types";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { deleteCartStrapi } from "@/lib/delete-cart";
+import { getCart } from "@/lib/get-cart";
+import { addToCartStrapi } from "@/lib/post-cart";
+import { updateCartStrapi } from "@/lib/update-cart";
+import { CartProduct } from "@/types/types";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface CartContextProps {
-  cart: CartItem[];
+  cart: CartProduct[];
   deleteCartItem: (id: string) => void;
-  addCartItem: (product: CartItem) => void;
+  addCartItem: (product: CartProduct) => void;
   clearCart: () => void;
   isCartOpen: boolean;
   toggleCart: () => void;
@@ -15,34 +25,74 @@ interface CartContextProps {
 const CartContext = createContext<CartContextProps>({} as CartContextProps);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartProduct[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    // Comprobamos que tenga un id de carrito y si no se le asigna uno
+    const cartId = sessionStorage?.getItem("cartId");
+    if (!cartId) {
+      sessionStorage.setItem("cartId", crypto.randomUUID());
+      // Si tiene id de carrito nos traemos los objetos
+    } else {
+      getCart(cartId).then((res) => setCart(res));
+    }
+  }, []);
 
   const toggleCart = () => setIsCartOpen((prev) => !prev);
 
   // Cart Actions
-  const deleteCartItem = (id: string) => {
-    const newCart = cart.filter((product) => product?.id !== id);
-    setCart(newCart);
+
+  const deleteCartItem = async (documentId: string) => {
+    const res = await deleteCartStrapi(documentId);
+
+    if (res) {
+      const newCart = cart.filter(
+        (product) => product?.documentId !== documentId
+      );
+      setCart(newCart);
+    }
   };
 
-  const addCartItem = (product: CartItem) => {
+  const addCartItem = async (product: CartProduct) => {
     // Comprobamos si el producto ya está en el carrito
-    const index = cart.findIndex((item) => item.id === product.id);
+    const index = cart.findIndex(
+      (item) => item.variantId === product.variantId
+    );
     let newCart;
     if (index !== -1) {
       // Si el producto ya existe en el carrito, actualizamos la cantidad
+      const newQty = cart[index].qty + product.qty;
+      await updateCartStrapi(cart[index].documentId as string, newQty);
+      // Actualizamos el estado
       newCart = [...cart];
-      newCart[index].qty += product.qty; // O cualquier otra lógica que necesites
+      newCart[index].qty = newQty;
+      setCart(newCart);
+      setIsCartOpen(true);
     } else {
       // Si el producto no está en el carrito, lo agregamos
-      newCart = [...cart, product];
+      const response = await addToCartStrapi(
+        product.variantId as string,
+        product.qty,
+        sessionStorage.getItem("cartId") as string
+      );
+
+      if (response.data) {
+        newCart = [
+          ...cart,
+          { ...product, documentId: response.data.documentId },
+        ];
+        setCart(newCart);
+        setIsCartOpen(true);
+      }
     }
-    setCart(newCart);
-    setIsCartOpen(true);
   };
 
-  const clearCart = () => {
+  const clearCart = async () => {
+    const promises = cart.map((item) =>
+      deleteCartItem(item.documentId as string)
+    );
+    await Promise.all(promises);
     setCart([]);
   };
 

@@ -46,7 +46,7 @@ export const getProducts = async ({
           price,
           product_category,
         } = product;
-        const images = rawImages.map((image) => `${STRAPI_HOST}/${image.url}`);
+        const images = rawImages.map((image) => `${STRAPI_HOST}${image.url}`);
         const { slug: categorySlug } = product_category as CategoryType;
         return {
           name,

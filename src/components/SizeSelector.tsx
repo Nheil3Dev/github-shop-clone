@@ -1,5 +1,7 @@
 "use client";
 
+import { SelectedProduct } from "@/types/types";
+
 const SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const SizeSelector = ({
@@ -11,12 +13,7 @@ export const SizeSelector = ({
   sizes: string[];
   title: string;
   handleSelectedSize: (prop: string) => void;
-  selectedProduct: {
-    size: string;
-    color: string;
-    stock: number | undefined;
-    qty: number;
-  };
+  selectedProduct: SelectedProduct;
 }) => {
   if (sizes[0] === "-" || sizes[0] === "NONE" || sizes[0] === null) return;
 

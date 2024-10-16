@@ -22,7 +22,7 @@ export const getProduct = async (
     } = data[0];
 
     const images = rawImages.map(
-      (image: Image) => `${STRAPI_HOST}/${image.url}`
+      (image: Image) => `${STRAPI_HOST}${image.url}`
     );
 
     const productCategory = {

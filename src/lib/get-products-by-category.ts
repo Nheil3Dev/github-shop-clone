@@ -36,7 +36,7 @@ export const getProductsByCategory = async ({
     const products: CategoryProduct[] = availableProducts.map(
       (product: ProductData) => {
         const { name, slug, description, images: rawImages, price } = product;
-        const images = rawImages.map((image) => `${STRAPI_HOST}/${image.url}`);
+        const images = rawImages.map((image) => `${STRAPI_HOST}${image.url}`);
 
         return {
           name,

@@ -44,15 +44,16 @@ export const ProductForm = ({
   /* Cart State */
 
   const { cart, addCartItem } = useCart();
-  const handleSubmit = (ev: FormEvent) => {
+
+  const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     const productToCart = {
-      id: selectedProduct?.id,
+      variantId: selectedProduct?.id as string,
       name,
       image,
-      href: "#",
-      size: selectedProduct?.size,
-      color: selectedProduct?.color,
+      slug: "#",
+      size: selectedProduct?.size as string,
+      color: selectedProduct?.color as string,
       price: Number(price),
       qty: selectedProduct.qty,
     };
@@ -67,21 +68,22 @@ export const ProductForm = ({
       return;
     }
 
-    if (productToCart.id === undefined) {
+    if (productToCart.variantId === undefined) {
       setError("Esta combinación no se encuentra disponible en este momento");
       return;
     }
 
-    if (productToCart.qty > selectedProduct?.stock) {
+    if (selectedProduct.stock && productToCart.qty > selectedProduct.stock) {
       setError("No disponemos de tanto stock en este momento");
       return;
     }
 
     if (
       cart.length > 0 &&
-      cart.filter((item) => item.id === selectedProduct?.id)[0]?.qty +
+      selectedProduct.stock &&
+      cart.filter((item) => item.variantId === selectedProduct?.id)[0]?.qty +
         selectedProduct.qty >
-        selectedProduct?.stock
+        selectedProduct.stock
     ) {
       setError("No disponemos de tanto stock en este momento");
       return;
@@ -89,7 +91,7 @@ export const ProductForm = ({
 
     setError("");
 
-    addCartItem(productToCart);
+    await addCartItem(productToCart);
   };
 
   return (
