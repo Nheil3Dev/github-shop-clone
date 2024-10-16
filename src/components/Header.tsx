@@ -57,8 +57,11 @@ export const Header = () => {
               </ul>
             </nav>
           </div>
-          <button className="flex gap-2 px-1 border rounded-lg border-transparent text-black dark:text-white hover:border-black dark:hover:border-white hover:text-gray-400">
-            <ShoppingCartIcon height={20} className="" onClick={toggleCart} />
+          <button
+            onClick={toggleCart}
+            className="flex gap-2 px-1 border rounded-lg border-transparent text-black dark:text-white hover:border-black dark:hover:border-white hover:text-gray-400"
+          >
+            <ShoppingCartIcon height={20} className="" />
             {cart.length > 0 && (
               <span>{cart.reduce((acc, curr) => curr.qty + acc, 0)}</span>
             )}

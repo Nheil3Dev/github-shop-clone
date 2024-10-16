@@ -5,13 +5,7 @@ import { CategoryProduct } from "@/types/types";
 import Image from "next/image";
 import { useState } from "react";
 
-export const ProductItem = ({
-  product,
-  url,
-}: {
-  product: CategoryProduct;
-  url: string;
-}) => {
+export const ProductItem = ({ product }: { product: CategoryProduct }) => {
   const [ishover, setIsHover] = useState(false);
 
   return (
@@ -19,7 +13,7 @@ export const ProductItem = ({
       key={product.slug}
       className="w-full max-w-sm p-5 border dark:border-gray-900 hover:border-black dark:hover:border-gray-400 group"
     >
-      <Link href={`${url}/${product.slug}`}>
+      <Link href={`/${product.slug}`}>
         <div
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
@@ -46,7 +40,7 @@ export const ProductItem = ({
           Vista rápida
         </div>
 
-        <Link href={`${url}/${product.slug}`}>
+        <Link href={`/${product.slug}`}>
           <h5 className="min-h-16 text-xl font-semibold tracking-tight text-gray-900 dark:text-white hover:underline">
             {product.name}
           </h5>

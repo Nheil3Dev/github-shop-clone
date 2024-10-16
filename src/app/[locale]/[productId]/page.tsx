@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   const { productId, locale } = params;
   /* Info from product */
-  const { name, description, images, price, productCategory } =
-    await getProduct(productId, locale);
+  const product = await getProduct(productId, locale);
+  const { productCategory, images, name } = product;
 
   /* Variants from product like size, colors  */
   const variants = await getVariants(locale, productId);
@@ -60,13 +60,7 @@ export default async function ProductPage({ params }: Props) {
       <div className="container px-4 sm:px-0 mx-auto">
         <div className="flex flex-col md:flex-row">
           <ImgSlider images={images} />
-          <ProductInfo
-            name={name}
-            description={description}
-            price={price}
-            image={images[0]}
-            variants={variants}
-          />
+          <ProductInfo product={product} variants={variants} />
         </div>
       </div>
     </section>

@@ -32,7 +32,7 @@ export const ImgModal = ({
   if (!isOpen) return;
 
   return (
-    <div className="top-0 left-0 fixed w-full h-full bg-white dark:bg-gray-900 z-20">
+    <div className="top-0 left-0 fixed w-full h-full bg-white dark:bg-gray-900 z-40">
       <div className="flex flex-col-reverse w-full h-full overflow-hidden">
         {/* Miniaturas de fotos */}
         <div className="hidden md:flex flex-row relative min-w-20">

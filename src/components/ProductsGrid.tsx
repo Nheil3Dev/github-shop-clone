@@ -64,11 +64,7 @@ export const ProductsGrid = async ({
       <div className="container mx-auto flex flex-row flex-wrap items-center justify-center sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
         {products.length > 0 &&
           products.map((product: CategoryProduct) => (
-            <ProductItem
-              product={product}
-              url={`/categories/${product.categorySlug}`}
-              key={product.slug}
-            />
+            <ProductItem product={product} key={product.slug} />
           ))}
       </div>
 

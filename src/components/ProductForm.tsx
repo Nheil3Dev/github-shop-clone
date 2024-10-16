@@ -1,7 +1,7 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { ProductVariant, SelectedProduct } from "@/types/types";
+import { Product, ProductVariant, SelectedProduct } from "@/types/types";
 import { FormEvent } from "react";
 import { CartButton } from "./CartButton";
 import { ColorSelector } from "./ColorSelector";
@@ -9,9 +9,7 @@ import { SizeSelector } from "./SizeSelector";
 
 export const ProductForm = ({
   variants,
-  image,
-  price,
-  name,
+  product,
   sizeTitle,
   selectedProduct,
   handleSelectedColor,
@@ -23,9 +21,7 @@ export const ProductForm = ({
   setError,
 }: {
   variants: ProductVariant[];
-  image: string;
-  price: number;
-  name: string;
+  product: Product;
   sizeTitle: string;
   selectedProduct: SelectedProduct;
   handleSelectedColor: (color: string) => void;
@@ -39,6 +35,7 @@ export const ProductForm = ({
   error: string;
   setError: (prop: string) => void;
 }) => {
+  const { name, price, slug, images } = product;
   const isStocked = variants.some((variant) => Number(variant.stock) > 0);
 
   /* Cart State */
@@ -50,13 +47,15 @@ export const ProductForm = ({
     const productToCart = {
       variantId: selectedProduct?.id as string,
       name,
-      image,
-      slug: "#",
+      image: images[0],
+      slug: slug,
       size: selectedProduct?.size as string,
       color: selectedProduct?.color as string,
       price: Number(price),
       qty: selectedProduct.qty,
     };
+
+    // VALIDATIONS
 
     if (productToCart.color === undefined) {
       setError("Debe seleccionar un color");

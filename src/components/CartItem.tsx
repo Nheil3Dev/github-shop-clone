@@ -19,7 +19,7 @@ export const CartItem = ({ product }: { product: CartProduct }) => {
       <div className="w-9/12 font-semibold">
         <div className="flex items-start justify-between gap-3">
           <Link
-            href={product.slug}
+            href={`/${product.slug}`}
             className="underline font-semibold text-black dark:text-gray-200 hover:no-underline"
           >
             {product.name}

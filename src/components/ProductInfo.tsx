@@ -1,26 +1,18 @@
 "use client";
 
 import { useProduct } from "@/hooks/useProduct";
-import { Description, ProductVariant } from "@/types/types";
+import { Product, ProductVariant } from "@/types/types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useFormatter, useTranslations } from "next-intl";
 import { ProductForm } from "./ProductForm";
 
 type Props = {
-  name: string;
-  description: Description;
-  price: number;
-  image: string;
+  product: Product;
   variants: ProductVariant[];
 };
 
-export const ProductInfo = ({
-  name,
-  description,
-  price,
-  image,
-  variants,
-}: Props) => {
+export const ProductInfo = ({ product, variants }: Props) => {
+  const { name, description, price } = product;
   const {
     selectedProduct,
     handleQty,
@@ -59,10 +51,8 @@ export const ProductInfo = ({
       </div>
 
       <ProductForm
+        product={product}
         variants={variants}
-        image={image}
-        price={price}
-        name={name}
         sizeTitle={t("size")}
         handleQty={handleQty}
         handleSelectedColor={handleSelectedColor}

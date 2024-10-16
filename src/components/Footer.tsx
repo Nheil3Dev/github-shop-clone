@@ -12,7 +12,7 @@ export const Footer = () => {
           <h4 className="font-bold py-4">Shop</h4>
           <ul>
             <li>
-              <Link href="#" className={linkStyle}>
+              <Link href="/categories" className={linkStyle}>
                 Shop all
               </Link>
             </li>
