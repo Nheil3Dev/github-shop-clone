@@ -19,10 +19,10 @@ export const SizeSelector = ({
 
   return (
     <div>
-      <p className="mb-4">
+      <p>
         {title} {selectedProduct?.size !== "-" ? selectedProduct?.size : ""}
       </p>
-      <div className="flex gap-4 mb-10">
+      <div className="flex gap-4 my-4">
         {SIZES.map((size) => {
           if (sizes.includes(size)) {
             return (
@@ -44,9 +44,10 @@ export const SizeSelector = ({
             return (
               <div
                 key={size}
-                className="antialiased bg-gray-300 dark:bg-gray-600 border h-14 w-14 flex items-center justify-center text-white dark:text-gray-900 font-semibold text-sm border-transparent rounded-full cursor-default"
+                className=" relative antialiased bg-gray-300 dark:bg-gray-600 border h-14 w-14 flex items-center justify-center text-white dark:text-gray-900 font-semibold text-sm border-transparent rounded-full cursor-default"
               >
                 {size}
+                <div className="w-[6px] h-full bg-red-400 absolute rotate-45 border-r border-l border-white"></div>
               </div>
             );
           }

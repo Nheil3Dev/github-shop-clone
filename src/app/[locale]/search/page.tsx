@@ -1,10 +1,11 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { ProductsGrid } from "@/components/ProductsGrid";
+import { redirect } from "@/i18n/routing";
 import { Metadata } from "next";
 
 type Props = {
   params: { categoryId: string; locale: string };
-  searchParams?: { page: string; sortBy: string };
+  searchParams: { page?: string; sortBy?: string; query: string };
 };
 
 export async function generateMetadata({
@@ -12,10 +13,11 @@ export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
   const page = searchParams?.page ?? 1;
+  const query = searchParams?.query ?? "";
 
   const title = `${
     Number(page) > 1 ? `Page ${page} | ` : ""
-  }Search results for: `;
+  }Search results for: '${query}' `;
 
   return {
     title,
@@ -24,7 +26,9 @@ export async function generateMetadata({
 
 export default async function SearchPage({ params, searchParams }: Props) {
   const { locale } = params;
-  const page = Number(searchParams?.page ?? 1);
+  const { query } = searchParams;
+
+  if (!query) redirect("/");
 
   const breadcrumbs = [
     {
@@ -33,7 +37,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
       active: false,
     },
     {
-      label: "Search results for: ",
+      label: `Search results for: '${searchParams?.query ?? " "}' `,
       href: "/search",
       active: true,
     },
@@ -46,7 +50,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
 
-        <ProductsGrid page={page} locale={locale} searchParams={searchParams} />
+        <ProductsGrid locale={locale} searchParams={searchParams} />
       </section>
     </>
   );

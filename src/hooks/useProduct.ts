@@ -2,7 +2,10 @@ import { getColors, getSizes } from "@/lib/utils";
 import { ProductVariant, SelectedProduct } from "@/types/types";
 import { useEffect, useState } from "react";
 
-export const useProduct = (variants: ProductVariant[]) => {
+export const useProduct = (
+  variants: ProductVariant[],
+  editProduct?: SelectedProduct
+) => {
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     id: undefined,
     size: undefined,
@@ -106,12 +109,17 @@ export const useProduct = (variants: ProductVariant[]) => {
   };
 
   const handleQty = (qty: number) => {
+    if (qty < 1) return;
     setError("");
     setSelectedProduct((prev) => ({ ...prev, qty: qty }));
   };
 
   useEffect(() => {
-    if (sizes.length === 1 && colors.length === 1) {
+    // Si estamos editando un producto del carrito
+    if (editProduct) {
+      setSelectedProduct(editProduct);
+      // Para productos que no tienen variantes
+    } else if (sizes.length === 1 && colors.length === 1) {
       const [{ id, size, color, stock }] = variants;
       const uniqueSelectedProduct = {
         id,
@@ -121,10 +129,13 @@ export const useProduct = (variants: ProductVariant[]) => {
         qty: 1,
       };
       setSelectedProduct(uniqueSelectedProduct);
+      // Con variantes
     } else {
+      // Solo dispone de un color o color none
       if (colors.length === 1) {
         handleSelectedColor(colors[0].name);
       }
+      // Solo dispone de una talla o talla none
       if (sizes.length === 1) {
         handleSelectedSize(sizes[0]);
       }

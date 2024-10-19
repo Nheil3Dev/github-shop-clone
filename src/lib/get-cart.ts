@@ -1,15 +1,16 @@
 "use server";
 
-import { query } from "./strapi";
+import { get } from "./strapi";
 
 const { STRAPI_HOST } = process.env;
 
 export const getCart = async (cartId: string) => {
-  const url = `carts?cart_id=${cartId}&populate[product_variant][populate][0]=product&populate[product_variant][populate][1]=product.images`;
+  const url = `carts?filters[cart_id][$contains]=${cartId}&populate[product_variant][populate][0]=product&populate[product_variant][populate][1]=product.images`;
   try {
-    const response = await query(url);
+    const response = await get(url);
     const { data } = response;
-    const cart = data.map((item) => {
+
+    const cart = data?.map((item) => {
       const { documentId, quantity, product_variant } = item;
       const { id, color, size, product } = product_variant[0];
       const { name, price, slug, images } = product;

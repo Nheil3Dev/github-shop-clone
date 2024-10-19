@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
-export const CartButton = ({ isStocked }: { isStocked: boolean }) => {
-  const t = useTranslations("CartBtnComponent");
+export const EditCartButton = ({ isStocked }: { isStocked: boolean }) => {
+  const t = useTranslations("EditCartBtnComponent");
   if (isStocked) {
     return (
       <button

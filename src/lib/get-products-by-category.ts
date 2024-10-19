@@ -4,7 +4,7 @@ import {
   ProductApi,
   ProductData,
 } from "@/types/types";
-import { query } from "./strapi";
+import { get } from "./strapi";
 
 const { STRAPI_HOST } = process.env;
 
@@ -28,7 +28,7 @@ export const getProductsByCategory = async ({
   if (sort) url += `&sort=${sort}:desc`;
 
   try {
-    const res: ProductApi = await query(url);
+    const res: ProductApi = await get(url);
     const { data, meta } = res;
 
     const availableProducts = data.filter((product) => product.isActive);

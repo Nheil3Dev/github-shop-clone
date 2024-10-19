@@ -1,14 +1,15 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { useRouter } from "@/i18n/routing";
 import { Product, ProductVariant, SelectedProduct } from "@/types/types";
 import { FormEvent } from "react";
-import { CartButton } from "./CartButton";
 import { ColorSelector } from "./ColorSelector";
+import { EditCartButton } from "./EditCartButton";
 import { QtySelector } from "./QtySelector";
 import { SizeSelector } from "./SizeSelector";
 
-export const ProductForm = ({
+export const ProductFormEdit = ({
   variants,
   product,
   sizeTitle,
@@ -20,6 +21,7 @@ export const ProductForm = ({
   colors,
   error,
   setError,
+  productIdToEdit,
 }: {
   variants: ProductVariant[];
   product: Product;
@@ -35,18 +37,21 @@ export const ProductForm = ({
   }[];
   error: string;
   setError: (prop: string) => void;
+  productIdToEdit: string;
 }) => {
   const { name, price, slug, images } = product;
   const isStocked = variants.some((variant) => Number(variant.stock) > 0);
+  const router = useRouter();
 
   /* Cart State */
 
-  const { cart, addCartItem } = useCart();
+  const { cart, editProductCart } = useCart();
 
   const handleSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     const productToCart = {
       variantId: selectedProduct?.id as string,
+      documentId: productIdToEdit,
       name,
       image: images[0],
       slug: slug,
@@ -93,7 +98,9 @@ export const ProductForm = ({
 
     setError("");
 
-    await addCartItem(productToCart);
+    await editProductCart(productToCart);
+
+    router.push("/checkout/cart");
   };
 
   return (
@@ -119,7 +126,7 @@ export const ProductForm = ({
             isStocked={isStocked}
           />
 
-          <CartButton isStocked={isStocked} />
+          <EditCartButton isStocked={isStocked} />
         </div>
       </form>
       {error && <p className="text-red-400">{error}</p>}

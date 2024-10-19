@@ -11,22 +11,21 @@ import { SortBy } from "./SortBy";
 const PAGE_SIZE = 8;
 
 type Props = {
-  page: number;
-  searchParams?: { page: string; sortBy: string };
+  searchParams?: { page: string; sortBy: string; query: string };
   locale: string;
   categoryId?: string;
 };
 
 export const ProductsGrid = async ({
-  page,
   searchParams,
   locale,
   categoryId,
 }: Props) => {
   const { products, pagination } = await getProducts({
     pageSize: PAGE_SIZE,
-    page,
+    page: searchParams?.page ?? 1,
     sort: searchParams?.sortBy,
+    query: searchParams?.query,
     locale,
     categoryId,
   });
@@ -42,7 +41,7 @@ export const ProductsGrid = async ({
             messages={pick(messages, "PaginationDataComponent")}
           >
             <PaginationData
-              page={page}
+              page={searchParams?.page ?? 1}
               pageSize={pagination.pageSize}
               total={pagination.total}
             />

@@ -16,7 +16,7 @@ export default function Breadcrumbs({
       aria-label="Breadcrumb"
       className="items-center justify-center sm:justify-start pb-8 pt-2 hidden md:flex container mx-auto"
     >
-      <ol className="flex text-xl md:text-2xl">
+      <ol className="flex items-end text-xl md:text-2xl">
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             key={breadcrumb.href}
@@ -28,7 +28,9 @@ export default function Breadcrumbs({
             }`}
           >
             <Link
-              className={breadcrumb.active ? "cursor-default" : ""}
+              className={
+                breadcrumb.active ? "cursor-default text-4xl font-bold" : ""
+              }
               href={breadcrumb.href}
             >
               {breadcrumb.label}

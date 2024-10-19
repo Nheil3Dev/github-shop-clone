@@ -5,7 +5,7 @@ import {
   ProductApi,
   ProductData,
 } from "@/types/types";
-import { query } from "./strapi";
+import { get } from "./strapi";
 
 const { STRAPI_HOST } = process.env;
 
@@ -13,12 +13,14 @@ export const getProducts = async ({
   pageSize,
   page,
   sort,
+  query,
   locale = "en",
   categoryId,
 }: {
   pageSize: number;
   page: number;
   sort?: string;
+  query?: string;
   locale?: string;
   categoryId?: string;
 }): Promise<{ products: CategoryProduct[]; pagination: Pagination }> => {
@@ -26,12 +28,13 @@ export const getProducts = async ({
 
   if (categoryId)
     url += `&filters[product_category][slug][$contains]=${categoryId}`;
+  if (query) url += `&filters[name][$contains]=${query}`;
   if (page) url += `&pagination[page]=${page}`;
   if (pageSize) url += `&pagination[pageSize]=${pageSize}`;
   if (sort) url += `&sort=${sort}:desc`;
 
   try {
-    const res: ProductApi = await query(url);
+    const res: ProductApi = await get(url);
     const { data, meta } = res;
 
     const availableProducts = data.filter((product) => product.isActive);

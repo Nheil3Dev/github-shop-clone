@@ -1,17 +1,18 @@
 "use client";
 
 import { useProduct } from "@/hooks/useProduct";
-import { Product, ProductVariant } from "@/types/types";
+import { Product, ProductVariant, SelectedProduct } from "@/types/types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useFormatter, useTranslations } from "next-intl";
-import { ProductForm } from "./ProductForm";
+import { ProductFormEdit } from "./ProductFormEdit";
 
 type Props = {
   product: Product;
   variants: ProductVariant[];
+  editProduct?: SelectedProduct;
 };
 
-export const ProductInfo = ({ product, variants }: Props) => {
+export const ProductInfoEdit = ({ product, variants, editProduct }: Props) => {
   const { name, description, price } = product;
   const {
     selectedProduct,
@@ -23,7 +24,7 @@ export const ProductInfo = ({ product, variants }: Props) => {
     sizes,
     error,
     setError,
-  } = useProduct(variants);
+  } = useProduct(variants, editProduct);
 
   const t = useTranslations("ProductPage");
   const format = useFormatter();
@@ -50,7 +51,7 @@ export const ProductInfo = ({ product, variants }: Props) => {
         </div>
       </div>
 
-      <ProductForm
+      <ProductFormEdit
         product={product}
         variants={variants}
         sizeTitle={t("size")}
@@ -62,6 +63,7 @@ export const ProductInfo = ({ product, variants }: Props) => {
         colors={colors}
         error={error}
         setError={setError}
+        productIdToEdit={editProduct?.documentId}
       />
 
       <div>

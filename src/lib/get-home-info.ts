@@ -1,10 +1,10 @@
-import { query } from "./strapi";
+import { get } from "./strapi";
 
 const { STRAPI_HOST } = process.env;
 
 export async function getHomeInfo(locale: string = "en") {
   try {
-    const res = await query(`home?locale=${locale}&populate=cover`);
+    const res = await get(`home?locale=${locale}&populate=cover`);
     const { title, description, cover, button } = res.data;
     const image = `${STRAPI_HOST}${cover.url}`;
 

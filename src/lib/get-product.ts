@@ -1,5 +1,5 @@
 import { Image, Product } from "@/types/types";
-import { query } from "./strapi";
+import { get } from "./strapi";
 
 const { STRAPI_HOST } = process.env;
 
@@ -10,7 +10,7 @@ export const getProduct = async (
   const url = `products?locale=${locale}&filters[slug][$contains]=${productId}&populate[0]=images&populate[1]=product_category&populate[2]=product_variants`;
 
   try {
-    const res = await query(url);
+    const res = await get(url);
     const { data } = res;
     const {
       slug,

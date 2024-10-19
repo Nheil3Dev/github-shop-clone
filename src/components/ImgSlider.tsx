@@ -32,7 +32,7 @@ export const ImgSlider = ({ images }: { images: string[] }) => {
           ))}
           {/* Indicador de la imagen seleccionada */}
           <div
-            className={`h-20 w-20 border border-gray-300 bg-gray-900/20 absolute transition-all duration-300 ease-in-out delay-100`}
+            className={`h-20 w-20 border border-gray-300 bg-black/30 absolute transition-all duration-300 ease-in-out delay-100`}
             style={{ top: `${activeImage * 5}rem` }} // Ajusta la posición según la imagen seleccionada
           ></div>
         </div>

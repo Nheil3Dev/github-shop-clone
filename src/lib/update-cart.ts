@@ -1,18 +1,18 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { put } from "./strapi";
 
 export const updateCartStrapi = async (
   documentId: string,
-  quantity: number
+  data: {
+    product_variant?: string;
+    quantity?: number;
+  }
 ) => {
   const url = `carts/${documentId}`;
 
-  const data = {
-    quantity,
-  };
+  await put(url, data);
 
-  const response = await put(url, data);
-
-  console.log(response);
+  revalidatePath("/checkout/cart/");
 };

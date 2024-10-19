@@ -4,8 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { Link } from "@/i18n/routing";
 
 export const CheckoutSummary = () => {
-  const { cart } = useCart();
-  const subtotal = cart.reduce((acc, cur) => acc + cur.price * cur.qty, 0);
+  const { cart, total } = useCart();
 
   if (cart.length === 0) return;
   return (
@@ -13,11 +12,11 @@ export const CheckoutSummary = () => {
       <h3 className="font-bold border-b border-b-gray-400 pb-3">Summary</h3>
       <div className="flex justify-between border-b border-b-gray-400 pb-3 pt-2 text-xs">
         <h4>Subtotal</h4>
-        <p>${subtotal}</p>
+        <p>${total.toFixed(2)}</p>
       </div>
       <div className="flex justify-between pt-2 font-semibold">
         <h3>Order total</h3>
-        <p>${subtotal}</p>
+        <p>${total.toFixed(2)}</p>
       </div>
       <Link
         href={"/checkout"}

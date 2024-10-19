@@ -1,9 +1,9 @@
 "use client";
 
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { generatePagination } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function PaginationAlt({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();

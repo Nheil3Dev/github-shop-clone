@@ -146,7 +146,7 @@ export type Product = {
   description: Description;
   images: string[];
   price: number;
-  productCategory: {
+  productCategory?: {
     name: string;
     slug: string;
   };

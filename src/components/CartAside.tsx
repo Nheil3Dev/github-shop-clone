@@ -5,7 +5,7 @@ import { Link } from "@/i18n/routing";
 import { CartItem } from "./CartItem";
 
 export const CartAside = () => {
-  const { isCartOpen, toggleCart, cart } = useCart();
+  const { isCartOpen, toggleCart, cart, total } = useCart();
 
   return (
     <aside
@@ -28,16 +28,14 @@ export const CartAside = () => {
               </p>
             )}
             {cart.map((product) => (
-              <CartItem key={product.id} product={product} />
+              <CartItem key={product.documentId} product={product} />
             ))}
           </div>
           {cart.length > 0 && (
             <div className="flex flex-col w-full">
               <div className="flex justify-between p-4 bg-gray-200 text-gray-800 text-sm">
                 <p>Cart subtotal:</p>
-                <p>
-                  ${cart.reduce((acc, cur) => acc + cur.price * cur.qty, 0)}
-                </p>
+                <p>${total.toFixed(2)}</p>
               </div>
               <Link
                 onClick={toggleCart}

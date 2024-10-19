@@ -10,6 +10,9 @@
   "CartBtnComponent": {
     "label": "Añadir al carrito"
   },
+  "EditCartBtnComponent": {
+    "label": "Actualizar carrito"
+  },
   "ProductPage": {
     "stocked": "En stock",
     "noStocked": "Fuera de stock",
