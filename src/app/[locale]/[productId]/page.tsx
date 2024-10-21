@@ -27,7 +27,7 @@ export default async function ProductPage({ params }: Props) {
   const { productId, locale } = params;
   /* Info from product */
   const product = await getProduct(productId, locale);
-  const { productCategory, images, name } = product;
+  const { images, name } = product;
 
   /* Variants from product like size, colors  */
   const variants = await getVariants(locale, productId);
@@ -39,18 +39,8 @@ export default async function ProductPage({ params }: Props) {
       active: false,
     },
     {
-      label: "Categories",
-      href: "/categories",
-      active: false,
-    },
-    {
-      label: productCategory.name,
-      href: `/categories/${productCategory.slug}`,
-      active: false,
-    },
-    {
       label: name,
-      href: `/categories/${productCategory.slug}/${productId}`,
+      href: `/${productId}`,
       active: true,
     },
   ];

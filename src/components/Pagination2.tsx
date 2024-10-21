@@ -5,7 +5,7 @@ import { generatePagination } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "next/navigation";
 
-export default function PaginationAlt({ totalPages }: { totalPages: number }) {
+export default function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;

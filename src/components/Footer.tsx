@@ -3,21 +3,21 @@ import { Link } from "@/i18n/routing";
 export const Footer = () => {
   const linkStyle = "hover:underline hover:text-blue-400";
   return (
-    <footer className="w-full border-t border-t-gray-300 mb-20">
+    <footer className="hidden md:block w-full border-t border-t-gray-300 mb-20">
       <div className="container mx-auto flex justify-between mt-6">
         <div className="w-1/6">
           <h4 className="font-extrabold text-xl">{`The NheiL's Shop`}</h4>
         </div>
         <div className="w-1/6">
           <h4 className="font-bold py-4">Shop</h4>
-          <ul>
+          <ul className="flex flex-col gap-2">
             <li>
               <Link href="/categories" className={linkStyle}>
                 Shop all
               </Link>
             </li>
             <li>
-              <Link href="#" className={linkStyle}>
+              <Link href="/categories/apparel" className={linkStyle}>
                 Apparel
               </Link>
             </li>
@@ -45,7 +45,7 @@ export const Footer = () => {
         </div>
         <div className="w-1/6">
           <h4 className="font-bold py-4">Customer service</h4>
-          <ul>
+          <ul className="flex flex-col gap-2">
             <li>
               <Link href="#" className={linkStyle}>
                 Track my order

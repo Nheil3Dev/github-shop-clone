@@ -4,8 +4,15 @@
     "field1": "of"
   },
   "SortComponent": {
-    "default": "Default",
-    "price": "By price"
+    "label": "Sort by",
+    "oldest_arrivals": "Oldest arrivals",
+    "price_asc": "Price (Low to high)",
+    "price_desc": "Price (High to low)",
+    "newest_arrivals": "Newest arrivals"
+  },
+  "ItemsPerPageComponent": {
+    "label_1": "Show",
+    "label_2": "per page"
   },
   "CartBtnComponent": {
     "label": "Add to cart"
@@ -22,5 +29,10 @@
   },
   "CategoryPage": {
     "noItems": "No products found"
+  },
+  "FilterComponent": {
+    "color": "Color",
+    "size": "Size",
+    "category": "Category"
   }
 }

@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { ProductsGrid } from "@/components/ProductsGrid";
+import { ProductsSection } from "@/components/ProductsSection";
 import { redirect } from "@/i18n/routing";
 import { Metadata } from "next";
 
@@ -45,12 +45,12 @@ export default async function SearchPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <section className="bg-white pb-16 antialiased dark:bg-gray-900">
+      <section className="bg-white pb-16 antialiased dark:bg-gray-900 md:container md:mx-auto">
         <div className="container mx-auto">
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
 
-        <ProductsGrid locale={locale} searchParams={searchParams} />
+        <ProductsSection locale={locale} searchParams={searchParams} />
       </section>
     </>
   );

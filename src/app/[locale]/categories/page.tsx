@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Categories } from "@/components/Categories";
-import { ProductsGrid } from "@/components/ProductsGrid";
+import { ProductsSection } from "@/components/ProductsSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,12 +9,11 @@ export const metadata: Metadata = {
 
 type Props = {
   params: { locale: string };
-  searchParams?: { page: string; sortBy: string };
+  searchParams?: { page?: string; sortBy?: string; limit?: string };
 };
 
 export default function CategoryPage({ params, searchParams }: Props) {
   const { locale } = params;
-  const page = Number(searchParams?.page ?? 1);
 
   const breadcrumbs = [
     {
@@ -24,7 +23,7 @@ export default function CategoryPage({ params, searchParams }: Props) {
     },
     {
       label: "Shop all",
-      href: "#",
+      href: "/categories",
       active: true,
     },
   ];
@@ -37,7 +36,7 @@ export default function CategoryPage({ params, searchParams }: Props) {
 
       <Categories locale={locale} />
 
-      <ProductsGrid page={page} locale={locale} searchParams={searchParams} />
+      <ProductsSection locale={locale} searchParams={searchParams} />
     </section>
   );
 }

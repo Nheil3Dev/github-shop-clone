@@ -4,8 +4,15 @@
     "field1": "de"
   },
   "SortComponent": {
-    "default": "Por defecto",
-    "price": "Por precio"
+    "label": "Ordenar por",
+    "oldest_arrivals": "Más antiguos primero",
+    "price_asc": "Precio (Menor a mayor)",
+    "price_desc": "Precio (Mayor a menor)",
+    "newest_arrivals": "Más nuevos primero"
+  },
+  "ItemsPerPageComponent": {
+    "label_1": "Mostrar",
+    "label_2": "por página"
   },
   "CartBtnComponent": {
     "label": "Añadir al carrito"
@@ -22,5 +29,10 @@
   },
   "CategoryPage": {
     "noItems": "No se encontraron productos"
+  },
+  "FilterComponent": {
+    "color": "Color",
+    "size": "Talla",
+    "category": "Categoría"
   }
 }

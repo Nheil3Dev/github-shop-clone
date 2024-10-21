@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { ProductsGrid } from "@/components/ProductsGrid";
+import { ProductsSection } from "@/components/ProductsSection";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
 
@@ -26,7 +26,6 @@ export async function generateMetadata({
 
 export default async function ProductsPage({ params, searchParams }: Props) {
   const { categoryId, locale } = params;
-  const page = Number(searchParams?.page ?? 1);
   const category = capitalize(categoryId);
 
   const breadcrumbs = [
@@ -49,13 +48,12 @@ export default async function ProductsPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <section className="bg-white pb-16 antialiased dark:bg-gray-900">
+      <section className="bg-white pb-16 antialiased dark:bg-gray-900 md:container md:mx-auto">
         <div className="container mx-auto">
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
 
-        <ProductsGrid
-          page={page}
+        <ProductsSection
           locale={locale}
           searchParams={searchParams}
           categoryId={categoryId}
