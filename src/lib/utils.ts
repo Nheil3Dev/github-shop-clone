@@ -49,10 +49,10 @@ export const getColors = (variants: ProductVariant[]) => {
   // Usamos un Map para asegurar colores únicos y sus códigos
   const colorMap = new Map<string, string>();
 
-  variants.forEach((variant) => {
+  variants?.forEach((variant) => {
     // Si el color no ha sido añadido aún, lo añadimos con su colorCode
     if (!colorMap.has(variant.color)) {
-      colorMap.set(variant.color, variant.colorCode);
+      colorMap.set(variant.color, variant.colorCode ?? variant.color_code);
     }
   });
 

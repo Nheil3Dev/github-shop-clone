@@ -47,7 +47,7 @@ export const ItemsPerPageSelector = ({
   };
 
   return (
-    <div>
+    <div className="ml-auto">
       {t("label_1")}
       <select
         name="itemsPerPage"

@@ -22,7 +22,7 @@ export const SizeSelector = ({
       <p>
         {title} {selectedProduct?.size !== "-" ? selectedProduct?.size : ""}
       </p>
-      <div className="flex gap-4 my-4">
+      <div className="flex flex-wrap gap-4 my-4">
         {SIZES.map((size) => {
           if (sizes.includes(size)) {
             return (

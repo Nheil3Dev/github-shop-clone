@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "@/i18n/routing";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -12,6 +13,7 @@ export const SearchForm = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const isDisabledSearch = search.length < 3;
+  const t = useTranslations("SearchComponent");
 
   useEffect(() => {
     setSearch(searchParams.get("query")?.toString() ?? "");
@@ -63,9 +65,9 @@ export const SearchForm = () => {
         )}
       </div>
       <input
-        className="w-60 py-2 pl-3 pr-10 bg-transparent border border-black dark:border-white rounded-md text-sm focus:ring"
+        className="w-[270px] py-2 pl-3 pr-10 bg-transparent border border-black dark:border-white rounded-md text-sm focus:ring"
         type="text"
-        placeholder="Search entire store here..."
+        placeholder={t("placeholder")}
         id="search"
         name="search"
         value={search}

@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { FiltersAside } from "./FiltersAside";
 import { ItemsPerPageSelector } from "./ItemsPerPageSelector";
-import Pagination from "./Pagination2";
+import Pagination from "./Pagination";
 import { PaginationData } from "./PaginationData";
 import { ProductItem } from "./ProductItem";
 import { SortBySelector } from "./SortBySelector";
@@ -19,6 +19,7 @@ type Props = {
     query?: string;
     limit?: string;
     categoryId?: string;
+    collectionId?: string;
     color?: string;
     size?: string;
   };
@@ -40,7 +41,7 @@ export const ProductsSection = async ({
     query: searchParams?.query,
     locale,
     categoryId: categoryId ?? searchParams?.categoryId,
-    collectionId,
+    collectionId: collectionId ?? searchParams?.collectionId,
     color: searchParams?.color,
     size: searchParams?.size,
   });
@@ -90,7 +91,9 @@ export const ProductsSection = async ({
 
         {products.length > 0 && (
           <div className="container flex items-center justify-between mx-auto mt-16">
-            <Pagination totalPages={pagination.pageCount} />
+            {pagination.pageCount !== 1 && (
+              <Pagination totalPages={pagination.pageCount} />
+            )}
             <ItemsPerPageSelector
               total={pagination.total}
               defaultLimit={PAGE_SIZE_DEFAULT}

@@ -12,6 +12,10 @@ export interface CategoryProduct {
   images: string[];
   price: number;
   categorySlug?: string;
+  colors?: {
+    name: string;
+    colorCode: string;
+  }[];
 }
 
 export interface ProductApi {
@@ -35,6 +39,7 @@ export interface ProductData {
   locale: string;
   images: Image[];
   product_category?: CategoryType;
+  product_variants?: ProductVariant[];
 }
 
 export interface Description {

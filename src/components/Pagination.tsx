@@ -1,62 +1,129 @@
-import { Link } from "@/i18n/routing";
+"use client";
 
-export const PaginationData = ({
-  page,
-  pageSize,
-  pageCount,
-  total,
-}: {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-}) => {
-  const isFirstPage = page === 1;
-  const isLastPage = page === pageCount;
+import { Link, usePathname } from "@/i18n/routing";
+import { generatePagination } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "next/navigation";
 
-  const prevPage = page - 1;
-  const nextPage = page + 1;
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
 
-  const prevPageUrl = isFirstPage ? "#" : `?page=${prevPage}`;
-  const nextPageUrl = isLastPage ? "#" : `?page=${nextPage}`;
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const allPages = generatePagination(currentPage, totalPages);
 
   return (
-    <div className="flex flex-col items-center mt-12">
-      <span className="text-sm text-gray-700 dark:text-gray-400">
-        Showing{" "}
-        <span className="font-semibold text-gray-900 dark:text-white">
-          {(page - 1) * pageSize + 1}
-        </span>{" "}
-        to{" "}
-        <span className="font-semibold text-gray-900 dark:text-white">
-          {Math.min(pageSize + page - 1, total)}
-        </span>{" "}
-        of{" "}
-        <span className="font-semibold text-gray-900 dark:text-white">
-          {total}
-        </span>{" "}
-        Products
-      </span>
+    <>
+      <div className="inline-flex">
+        {!(currentPage <= 1) && (
+          <PaginationArrow
+            direction="left"
+            href={createPageURL(currentPage - 1)}
+            isDisabled={currentPage <= 1}
+          />
+        )}
 
-      <div className="inline-flex mt-2 xs:mt-0">
-        <Link
-          href={prevPageUrl}
-          className={`${
-            isFirstPage ? "pointer-events-none opacity-50" : ""
-          } flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
-        >
-          Prev Page
-        </Link>
+        <div className="flex gap-2 -space-x-px">
+          {allPages.map((page, index) => {
+            let position: "first" | "last" | "single" | "middle" | undefined;
 
-        <Link
-          href={nextPageUrl}
-          className={`${
-            isLastPage ? "pointer-events-none opacity-50" : ""
-          } flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
-        >
-          Next Page
-        </Link>
+            if (index === 0) position = "first";
+            if (index === allPages.length - 1) position = "last";
+            if (allPages.length === 1) position = "single";
+            if (page === "...") position = "middle";
+
+            return (
+              <PaginationNumber
+                key={page}
+                href={createPageURL(page)}
+                page={page}
+                position={position}
+                isActive={currentPage === page}
+              />
+            );
+          })}
+        </div>
+
+        {!(currentPage >= totalPages) && (
+          <PaginationArrow
+            direction="right"
+            href={createPageURL(currentPage + 1)}
+            isDisabled={currentPage >= totalPages}
+          />
+        )}
       </div>
-    </div>
+    </>
   );
-};
+}
+
+function PaginationNumber({
+  page,
+  href,
+  isActive,
+  position,
+}: {
+  page: number | string;
+  href: string;
+  position?: "first" | "last" | "middle" | "single";
+  isActive: boolean;
+}) {
+  const className =
+    "flex h-10 w-10 items-center justify-center text-sm border rounded-full" +
+    (position === "first" || position === "single" ? " rounded-l-full" : "") +
+    (position === "last" || position === "single" ? " rounded-r-full" : "") +
+    (isActive
+      ? " z-10 bg-black border-black dark:bg-blue-600 dark:border-blue-600 text-white"
+      : "") +
+    (!isActive && position !== "middle"
+      ? " hover:bg-gray-100 dark:hover:text-gray-700"
+      : "") +
+    (position === "middle" ? " text-gray-300" : "");
+
+  return isActive || position === "middle" ? (
+    <div className={className}>{page}</div>
+  ) : (
+    <Link href={href} className={className}>
+      {page}
+    </Link>
+  );
+}
+
+function PaginationArrow({
+  href,
+  direction,
+  isDisabled,
+}: {
+  href: string;
+  direction: "left" | "right";
+  isDisabled?: boolean;
+}) {
+  const className =
+    "flex h-10 w-10 items-center justify-center rounded-full border" +
+    (isDisabled
+      ? " pointer-events-none text-gray-300 dark:text-gray-700 dark:border-gray-700"
+      : "") +
+    (!isDisabled ? " hover:bg-gray-100 dark:hover:text-gray-700" : "") +
+    (direction === "left" ? " mr-2" : "") +
+    (direction === "right" ? " ml-2" : "");
+
+  const icon =
+    direction === "left" ? (
+      <ChevronLeftIcon className="w-4" />
+    ) : (
+      <ChevronRightIcon className="w-4" />
+    );
+
+  return isDisabled ? (
+    <div className={className}>{icon}</div>
+  ) : (
+    <Link className={className} href={href}>
+      {icon}
+    </Link>
+  );
+}

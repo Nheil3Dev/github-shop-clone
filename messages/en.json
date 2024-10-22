@@ -33,6 +33,14 @@
   "FilterComponent": {
     "color": "Color",
     "size": "Size",
-    "category": "Category"
+    "category": "Category",
+    "collection": "Collection"
+  },
+  "ProductItemComponent": {
+    "quickview": "Quickview",
+    "currency": "USD"
+  },
+  "SearchComponent": {
+    "placeholder": "Search entire store here..."
   }
 }

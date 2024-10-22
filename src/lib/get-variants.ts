@@ -1,9 +1,13 @@
+"use server";
+
 import { get } from "./strapi";
 
 export const getVariants = async (locale: string = "en", productId: string) => {
   const url = `product-variants?locale=${locale}&populate=product&filters[product][slug][$contains]=${productId}`;
 
   try {
+    // Añadimos el retraso artificial
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const res = await get(url);
     const { data } = res;
     const variants = data.map((variant) => {

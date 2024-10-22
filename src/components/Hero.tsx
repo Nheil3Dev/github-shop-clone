@@ -24,17 +24,7 @@ export const Hero = async ({ locale }: { locale: string }) => {
           >
             <BlocksRenderer content={description} />
           </div>
-          <LinkButton href={"/categories"}>
-            {button}
-            <svg
-              className="w-6 h-6 ml-2 -mr-1"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
-            </svg>
-          </LinkButton>
+          <LinkButton href={"/categories"}>{button}</LinkButton>
         </div>
 
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
@@ -51,3 +41,4 @@ export const Hero = async ({ locale }: { locale: string }) => {
     </section>
   );
 };
+// className="w-6 h-6 ml-2 -mr-1"

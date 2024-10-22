@@ -1,11 +1,15 @@
+"use server";
+
 import {
   CategoryProduct,
   CategoryType,
   Pagination,
   ProductApi,
   ProductData,
+  ProductVariant,
 } from "@/types/types";
 import { get } from "./strapi";
+import { getColors } from "./utils";
 
 const { STRAPI_HOST } = process.env;
 
@@ -30,7 +34,7 @@ export const getProducts = async ({
   color?: string;
   size?: string;
 }): Promise<{ products: CategoryProduct[]; pagination: Pagination }> => {
-  let url = `products?locale=${locale}&populate[0]=images&populate[1]=product_category`;
+  let url = `products?locale=${locale}&populate[0]=images&populate[1]=product_category&populate[2]=product_variants`;
 
   if (categoryId)
     url += `&filters[product_category][slug][$contains]=${categoryId}`;
@@ -38,6 +42,7 @@ export const getProducts = async ({
     url += `&filters[collections][slug][$contains]=${collectionId}`;
   if (color) url += `&filters[product_variants][color][$contains]=${color}`;
   if (size) url += `&filters[product_variants][size][$contains]=${size}`;
+  if (size || color) url += `&filters[product_variants][stock][$gt]=0`;
   if (query) url += `&filters[name][$contains]=${query}`;
   if (page) url += `&pagination[page]=${page}`;
   if (pageSize) url += `&pagination[pageSize]=${pageSize}`;
@@ -62,6 +67,7 @@ export const getProducts = async ({
           images: rawImages,
           price,
           product_category,
+          product_variants,
         } = product;
         const images = rawImages.map((image) => `${STRAPI_HOST}${image.url}`);
 
@@ -78,6 +84,7 @@ export const getProducts = async ({
           images,
           price,
           categorySlug,
+          colors: getColors(product_variants as ProductVariant[]),
         };
       }
     );
