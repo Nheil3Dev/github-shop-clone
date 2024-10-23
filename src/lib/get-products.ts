@@ -53,6 +53,8 @@ export const getProducts = async ({
   }
 
   try {
+    // Añadimos el retraso artificial
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const res: ProductApi = await get(url);
     const { data, meta } = res;
 

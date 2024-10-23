@@ -25,12 +25,14 @@
     "noStocked": "Fuera de stock",
     "size": "Talla",
     "currency": "EUR",
-    "remaining": "Sólo quedan {count}"
+    "remaining": "Sólo quedan {count}",
+    "modalLink": "Ir al producto"
   },
   "CategoryPage": {
     "noItems": "No se encontraron productos"
   },
   "FilterComponent": {
+    "title": "Filtrar productos",
     "color": "Color",
     "size": "Talla",
     "category": "Categoría",

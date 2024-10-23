@@ -181,3 +181,14 @@ export type SelectedProduct = {
   stock: undefined | number;
   qty: number;
 };
+
+export type SearchParams = {
+  page?: string;
+  sortBy?: string;
+  query?: string;
+  limit?: string;
+  categoryId?: string;
+  collectionId?: string;
+  color?: string;
+  size?: string;
+};

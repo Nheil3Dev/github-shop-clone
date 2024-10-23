@@ -5,7 +5,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { ImgModal } from "./ImgModal";
 
-export const ImgSlider = ({ images }: { images: string[] }) => {
+export const ImgSliderModal = ({ images }: { images: string[] }) => {
   const {
     activeImage,
     setActiveImage,
@@ -17,28 +17,9 @@ export const ImgSlider = ({ images }: { images: string[] }) => {
 
   return (
     <>
-      <div className="flex items-start flex-col md:flex-row gap-2 w-full md:w-3/5 2xl:pr-32 overflow-hidden">
-        {/* Miniaturas de fotos */}
-        <div className="hidden md:flex flex-col relative min-w-20">
-          {images?.map((image, index) => (
-            <div key={index} onClick={() => setActiveImage(index)}>
-              <Image
-                src={image}
-                alt={`Product Image ${index}`}
-                height={80}
-                width={80}
-              />
-            </div>
-          ))}
-          {/* Indicador de la imagen seleccionada */}
-          <div
-            className={`h-20 w-20 border border-gray-300 bg-black/30 absolute transition-all duration-300 ease-in-out delay-100`}
-            style={{ top: `${activeImage * 5}rem` }} // Ajusta la posición según la imagen seleccionada
-          ></div>
-        </div>
-
+      <div className="flex items-start flex-col w-full px-0 sm:px-20 md:px-0 md:w-3/5 overflow-hidden">
         {/* Slider */}
-        <div className="h-auto md:mt-16 md:mr-20 relative overflow-hidden group">
+        <div className="h-auto relative overflow-hidden group">
           {/* Botón Anterior */}
           {activeImage > 0 && (
             <div

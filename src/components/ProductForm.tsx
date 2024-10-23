@@ -20,6 +20,7 @@ export const ProductForm = ({
   colors,
   error,
   setError,
+  closeModal,
 }: {
   variants: ProductVariant[];
   product: Product;
@@ -35,6 +36,7 @@ export const ProductForm = ({
   }[];
   error: string;
   setError: (prop: string) => void;
+  closeModal?: () => void;
 }) => {
   const { name, price, slug, images } = product;
   const isStocked = variants.some((variant) => Number(variant.stock) > 0);
@@ -94,6 +96,10 @@ export const ProductForm = ({
     setError("");
 
     await addCartItem(productToCart);
+
+    if (closeModal) {
+      closeModal();
+    }
   };
 
   return (
@@ -112,7 +118,7 @@ export const ProductForm = ({
           selectedProduct={selectedProduct}
         />
 
-        <div className="flex my-8">
+        <div className="flex flex-wrap gap-8 my-8">
           <QtySelector
             selectedProduct={selectedProduct}
             handleQty={handleQty}

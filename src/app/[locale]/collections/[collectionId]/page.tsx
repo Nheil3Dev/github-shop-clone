@@ -2,12 +2,13 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { ProductsSection } from "@/components/ProductsSection";
 import { getCollection } from "@/lib/get-collection";
 import { capitalize } from "@/lib/utils";
+import { SearchParams } from "@/types/types";
 import { Metadata } from "next";
 import Image from "next/image";
 
 type Props = {
   params: { collectionId: string; locale: string };
-  searchParams: { page?: string; sortBy?: string };
+  searchParams: SearchParams;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

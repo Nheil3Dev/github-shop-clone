@@ -55,3 +55,5 @@ export const COLLECTIONS = [
     href: "/collections/pride-collection",
   },
 ];
+
+export const PAGE_SIZE_DEFAULT = 8;

@@ -12,6 +12,16 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        rotateXY: {
+          "0%": { transform: "rotateX(0deg) rotateY(0deg)" },
+          "50%": { transform: "rotateX(180deg) rotateY(0deg)" },
+          "100%": { transform: "rotateX(180deg) rotateY(180deg)" },
+        },
+      },
+      animation: {
+        rotateXY: "rotateXY 1s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

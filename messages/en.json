@@ -25,12 +25,14 @@
     "noStocked": "Out of stock",
     "size": "Size",
     "currency": "USD",
-    "remaining": "Only {count} left"
+    "remaining": "Only {count} left",
+    "modalLink": "Go to product"
   },
   "CategoryPage": {
     "noItems": "No products found"
   },
   "FilterComponent": {
+    "title": "Shopping options",
     "color": "Color",
     "size": "Size",
     "category": "Category",
