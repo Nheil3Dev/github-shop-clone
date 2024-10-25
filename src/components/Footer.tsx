@@ -10,7 +10,7 @@ export const Footer = () => {
         </div>
         <div className="w-1/6">
           <h4 className="font-bold py-4">Shop</h4>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 text-sm">
             <li>
               <Link href="/categories" className={linkStyle}>
                 Shop all
@@ -45,7 +45,7 @@ export const Footer = () => {
         </div>
         <div className="w-1/6">
           <h4 className="font-bold py-4">Customer service</h4>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 text-sm">
             <li>
               <Link href="#" className={linkStyle}>
                 Track my order
@@ -73,14 +73,14 @@ export const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="w-2/6">
-          <h4 className="font-bold py-4">Let{`'`}s stay in touch</h4>
+        <div className="w-2/6 text-sm">
+          <h4 className="font-bold py-4 text-base">Let{`'`}s stay in touch</h4>
           <p>Sign up to get notified about new collections and sales.</p>
           <form action="#" className="flex flex-col gap-4 mt-4">
             <input
               type="email"
               placeholder="Enter your email address"
-              className="py-1 px-2 rounded-md bg-transparent border border-gray-400 flex-grow focus:outline-offset-0 focus:outline-blue-400"
+              className="py-1 px-2 rounded-md bg-transparent border border-gray-400 flex-grow focus:ring focus:ring-blue-400"
             />
             <label htmlFor="terms">
               <input

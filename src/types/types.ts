@@ -192,3 +192,20 @@ export type SearchParams = {
   color?: string;
   size?: string;
 };
+
+export type State = {
+  success?: boolean;
+  jwt?: string;
+  user?: {
+    username: string;
+    email: string;
+  };
+  errors?: {
+    firstName?: string[];
+    lastName?: string[];
+    email?: string[];
+    password?: string[];
+    confirm?: string[];
+  };
+  message?: string | null;
+};

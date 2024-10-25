@@ -8,6 +8,20 @@ export function get(url: string) {
   }).then((res) => res.json());
 }
 
+export function getWithSignal(url: string, signal: AbortSignal) {
+  return fetch(`${STRAPI_HOST}/api/${url}`, {
+    headers: {
+      Authorization: `Bearer ${STRAPI_TOKEN}`,
+    },
+    signal, // Pasamos la señal de abortar
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Error fetching data: ${res.statusText}`);
+    }
+    return res.json();
+  });
+}
+
 export function getWithoutCache(url: string) {
   return fetch(`${STRAPI_HOST}/api/${url}`, {
     headers: {
@@ -17,11 +31,36 @@ export function getWithoutCache(url: string) {
   }).then((res) => res.json());
 }
 
-// CART
+export function auth(
+  url: string,
+  data:
+    | {
+        email: string;
+        password: string;
+        username: string;
+      }
+    | {
+        identifier: string;
+        password: string;
+      }
+) {
+  return fetch(`${STRAPI_HOST}/api/auth/local/${url}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${STRAPI_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) => res.json());
+}
+
+// CART & CUSTOMER DATA
 
 export function post(
   url: string,
-  data: { cart_id: string; product_variant: string; quantity: number }
+  data:
+    | { cart_id: string; product_variant: string; quantity: number }
+    | { firstName: string; lastName: string; users_permissions_user: string }
 ) {
   return fetch(`${STRAPI_HOST}/api/${url}`, {
     method: "POST",

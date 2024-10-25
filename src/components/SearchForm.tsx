@@ -65,7 +65,7 @@ export const SearchForm = () => {
         )}
       </div>
       <input
-        className="w-[270px] py-2 pl-3 pr-10 bg-transparent border border-black dark:border-white rounded-md text-sm focus:ring"
+        className="w-[270px] py-2 pl-3 pr-10 bg-transparent border border-black dark:border-white rounded-md text-sm focus:ring focus:ring-blue-400"
         type="text"
         placeholder={t("placeholder")}
         id="search"

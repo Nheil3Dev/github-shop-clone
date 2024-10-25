@@ -2,6 +2,7 @@ import { CartAside } from "@/components/CartAside";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { CartProvider } from "@/context/CartContext";
+import { UserProvider } from "@/context/UserContext";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -30,12 +31,14 @@ export default async function RootLayout({
         className={`${montserrat.className} antialiased bg-white dark:bg-gray-900  min-h-screen flex flex-col`}
       >
         <NextIntlClientProvider messages={messages}>
-          <CartProvider>
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <CartAside />
-            <Footer />
-          </CartProvider>
+          <UserProvider>
+            <CartProvider>
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <CartAside />
+              <Footer />
+            </CartProvider>
+          </UserProvider>
         </NextIntlClientProvider>
       </body>
     </html>
