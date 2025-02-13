@@ -25,12 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { productId, locale } = params;
-  /* Info from product */
-  const product = await getProduct(productId, locale);
+  const [product, variants] = await Promise.all([
+    getProduct(productId, locale),
+    getVariants(locale, productId),
+  ]);
   const { images, name } = product;
-
-  /* Variants from product like size, colors  */
-  const variants = await getVariants(locale, productId);
 
   const breadcrumbs = [
     {

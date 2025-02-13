@@ -23,6 +23,7 @@ export const ProductInfo = ({ product, variants }: Props) => {
     sizes,
     error,
     setError,
+    stock,
   } = useProduct(variants);
 
   const t = useTranslations("ProductPage");
@@ -42,9 +43,9 @@ export const ProductInfo = ({ product, variants }: Props) => {
         {/* Stock */}
         <div className="flex flex-col items-end justify-end h-12">
           <p className="text-xl">{isStocked ? t("stocked") : t("noStocked")}</p>
-          {selectedProduct?.stock && (
+          {stock && (
             <p className="text-sm font-light">
-              {t("remaining", { count: selectedProduct?.stock })}
+              {t("remaining", { count: stock })}
             </p>
           )}
         </div>

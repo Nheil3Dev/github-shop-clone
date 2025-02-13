@@ -1,3 +1,4 @@
+import { getStockVariant } from "@/lib/get-stock-variant";
 import { getColors, getSizes } from "@/lib/utils";
 import { ProductVariant, SelectedProduct } from "@/types/types";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export const useProduct = (
     qty: 1,
   });
   const [error, setError] = useState("");
+  const [stock, setStock] = useState();
   const colors = getColors(variants);
   const sizes = getSizes(variants);
 
@@ -142,6 +144,28 @@ export const useProduct = (
     }
   }, []);
 
+  // Aunque ya tengo el stock de cada variante lo hago así para que enun futuro
+  // se pueda manejar que mientras se cargan la variantes que es en el primer render
+  // otra persona haya comprado la prenda y ya ese stock no nos valdría
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!selectedProduct.id) {
+      setStock(undefined);
+    } else {
+      setStock(undefined);
+      getStockVariant("es", selectedProduct.id).then((res) => {
+        if (isMounted) {
+          setStock(res);
+        }
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedProduct.id]);
+
   return {
     selectedProduct,
     handleQty,
@@ -152,5 +176,6 @@ export const useProduct = (
     colors,
     error,
     setError,
+    stock,
   };
 };

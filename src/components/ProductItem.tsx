@@ -11,7 +11,7 @@ import { Loader } from "./Loader";
 import { ProductModal } from "./ProductModal";
 
 export const ProductItem = ({ product }: { product: CategoryProduct }) => {
-  const [ishover, setIsHover] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const { variants, isModalOpen, toogleModal, isLoading } = useProductModal(
     product.slug
   );
@@ -26,15 +26,19 @@ export const ProductItem = ({ product }: { product: CategoryProduct }) => {
       >
         <Link href={`/${product.slug}`}>
           <div
+            className="overflow-hidden"
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
           >
-            {ishover && product.images.length > 1 ? (
+            {isHover && product.images.length > 1 ? (
               <Image
                 src={product.images[1]}
                 alt="product image"
                 width={382}
                 height={382}
+                className={`transition-transform duration-200 ${
+                  isHover ? "scale-105 " : "scale-100"
+                }`}
               />
             ) : (
               <Image
@@ -42,6 +46,9 @@ export const ProductItem = ({ product }: { product: CategoryProduct }) => {
                 alt="product image"
                 width={382}
                 height={382}
+                className={`transition-transform duration-200 ${
+                  isHover ? "scale-105 " : "scale-100"
+                }`}
               />
             )}
           </div>

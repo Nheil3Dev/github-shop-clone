@@ -89,11 +89,11 @@ export const Footer = () => {
                 id="terms"
                 className="mr-2 "
               />
-              Yes, please, I{`'`}d like Github and affiliates to use my
+              Yes, please, I{`'`}d like Nheil and affiliates to use my
               information for personalizated communications, targeted
               advertising and campaign effectiveness. See the{" "}
               <Link href="#" className="underline text-blue-400">
-                GitHub Privacy Statement
+                Nheil Privacy Statement
               </Link>{" "}
               for more details.
             </label>
